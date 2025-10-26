@@ -2,30 +2,40 @@
 
 This repository contains public release artifacts for the DAM (Database Activity Monitoring) System.
 
-## Download Latest Release
+## Download Latest Release ✅ **v1.0.3d RECOMMENDED**
 
 ```bash
-# Download v1.0.3
-wget https://github.com/TawfiqulBari/dam-pub/releases/download/v1.0.3/dam-deployment-v1.0.3.tar.gz
-
-# Verify checksum
-echo "6bc0dcd83fda220aeb04386f6222ae711069ceeec8794ad028fea3e95d019ad9  dam-deployment-v1.0.3.tar.gz" | sha256sum -c
+# Download v1.0.3d (RECOMMENDED - includes idempotent migration fix)
+wget https://github.com/TawfiqulBari/dam-pub/releases/download/v1.0.3d/dam-deployment-v1.0.3d.tar.gz
 
 # Extract and install
-tar -xzf dam-deployment-v1.0.3.tar.gz
-cd dam-deployment-v1.0.3
+tar -xzf dam-deployment-v1.0.3d.tar.gz
+cd dam-deployment-v1.0.3d
 sudo ./install.sh
 ```
+
+**Why v1.0.3d?**
+- ✅ **Idempotent migrations** - Safe for repeat installations
+- ✅ **No 'relation already exists' errors** - Fixed from v1.0.3c
+- ✅ **Fixed migration chain** - No KeyError issues
+- ✅ **Generic nginx** - Works with any domain/IP
+- ✅ **Optional SSL setup** - Post-installation via `setup_ssl.sh`
+
+**Previous Versions:**
+- v1.0.3c - ⚠️ Not idempotent (fails on repeat installations)
+- v1.0.3b - ❌ Broken migration chain
+- v1.0.3a - ❌ Broken docker-compose references
+- v1.0.3 - Old release (superseded by v1.0.3d)
 
 ## Docker Images
 
 All Docker images are available on Docker Hub:
-- `tawfiqulbari/dam-api:v1.0.3`
-- `tawfiqulbari/dam-frontend:v1.0.3`
-- `tawfiqulbari/dam-collector:v1.0.3`
-- `tawfiqulbari/dam-parser:v1.0.3`
-- `tawfiqulbari/dam-policy:v1.0.3`
-- `tawfiqulbari/dam-alerts:v1.0.3`
+- `tawfiqulbari/dam-api:v1.0.3d` (also: v1.0.3, latest)
+- `tawfiqulbari/dam-frontend:v1.0.3d`
+- `tawfiqulbari/dam-collector:v1.0.3d`
+- `tawfiqulbari/dam-parser:v1.0.3d`
+- `tawfiqulbari/dam-policy:v1.0.3d`
+- `tawfiqulbari/dam-alerts:v1.0.3d`
 
 ## System Requirements
 
