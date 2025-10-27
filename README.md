@@ -2,40 +2,77 @@
 
 This repository contains public release artifacts for the DAM (Database Activity Monitoring) System.
 
-## Download Latest Release ✅ **v1.0.3d RECOMMENDED**
+## Download Latest Release ✅ **v1.0.5 RECOMMENDED**
 
 ```bash
-# Download v1.0.3d (RECOMMENDED - includes idempotent migration fix)
-wget https://github.com/TawfiqulBari/dam-pub/releases/download/v1.0.3d/dam-deployment-v1.0.3d.tar.gz
+# Download v1.0.5 (RECOMMENDED - includes fresh installation fix)
+wget https://github.com/TawfiqulBari/dam-pub/releases/download/v1.0.5/dam-deployment-v1.0.5.tar.gz
+
+# Verify checksum (optional but recommended)
+echo "6489c8095e9e80a9b40f6ee222bab35f326dfabf202e928707202cb73a34275b  dam-deployment-v1.0.5.tar.gz" | sha256sum -c
 
 # Extract and install
-tar -xzf dam-deployment-v1.0.3d.tar.gz
-cd dam-deployment-v1.0.3d
+tar -xzf dam-deployment-v1.0.5.tar.gz
+cd dam-deployment-v1.0.5
 sudo ./install.sh
 ```
 
-**Why v1.0.3d?**
-- ✅ **Idempotent migrations** - Safe for repeat installations
-- ✅ **No 'relation already exists' errors** - Fixed from v1.0.3c
-- ✅ **Fixed migration chain** - No KeyError issues
-- ✅ **Generic nginx** - Works with any domain/IP
-- ✅ **Optional SSL setup** - Post-installation via `setup_ssl.sh`
+**Why v1.0.5?**
+- 🔧 **Critical Fix**: Fresh installation support for table partitioning
+- ✅ **No data migration errors** - Skips data copy for fresh installs
+- ✅ **Works for both scenarios** - Fresh installs and upgrades
+- ✅ **All migrations idempotent** - Safe for repeat installations
+- ✅ **Production-ready** - Tested for all deployment scenarios
 
-**Previous Versions:**
-- v1.0.3c - ⚠️ Not idempotent (fails on repeat installations)
-- v1.0.3b - ❌ Broken migration chain
-- v1.0.3a - ❌ Broken docker-compose references
-- v1.0.3 - Old release (superseded by v1.0.3d)
+**What's New in v1.0.5:**
+- Fixed "INSERT has more expressions than target columns" error
+- Added `table_exists()` checks before data migration
+- Improved console output for fresh vs upgrade installs
+- Safe for both new deployments and upgrades from v1.0.4
+
+## Upgrade from Previous Versions
+
+**From v1.0.4:**
+```bash
+docker compose pull
+docker compose up -d
+# No migration needed - your database is already partitioned
+```
+
+**From v1.0.3d or earlier:**
+```bash
+# Backup your database first
+docker compose exec postgres pg_dump -U dam_user dam_db > backup_$(date +%Y%m%d).sql
+
+# Pull new images
+docker compose pull
+
+# Restart services
+docker compose up -d
+
+# Run migrations
+docker compose exec api alembic upgrade head
+```
 
 ## Docker Images
 
 All Docker images are available on Docker Hub:
-- `tawfiqulbari/dam-api:v1.0.3d` (also: v1.0.3, latest)
-- `tawfiqulbari/dam-frontend:v1.0.3d`
-- `tawfiqulbari/dam-collector:v1.0.3d`
-- `tawfiqulbari/dam-parser:v1.0.3d`
-- `tawfiqulbari/dam-policy:v1.0.3d`
-- `tawfiqulbari/dam-alerts:v1.0.3d`
+- `tawfiqulbari/dam-api:v1.0.5` (also: `latest`)
+- `tawfiqulbari/dam-frontend:v1.0.5`
+- `tawfiqulbari/dam-collector:v1.0.5`
+- `tawfiqulbari/dam-parser:v1.0.5`
+- `tawfiqulbari/dam-policy:v1.0.5`
+- `tawfiqulbari/dam-alerts:v1.0.5`
+
+**Pull latest images:**
+```bash
+docker pull tawfiqulbari/dam-api:latest
+docker pull tawfiqulbari/dam-frontend:latest
+docker pull tawfiqulbari/dam-collector:latest
+docker pull tawfiqulbari/dam-parser:latest
+docker pull tawfiqulbari/dam-policy:latest
+docker pull tawfiqulbari/dam-alerts:latest
+```
 
 ## System Requirements
 
@@ -53,7 +90,32 @@ All Docker images are available on Docker Hub:
 
 **⚠️ Change the admin password immediately after first login!**
 
+## Features
+
+- **Multi-Database Support:** Oracle, MySQL, PostgreSQL, MS SQL Server, MariaDB, MongoDB
+- **122+ Compliance Rules:** PCI-DSS, SOX, GDPR, HIPAA, and more
+- **Real-Time Monitoring:** Live session tracking and anomaly detection
+- **Professional Dashboard:** Interactive charts and system metrics
+- **Compliance Reports:** PDF/CSV export for 7 compliance frameworks
+- **SIEM Integration:** Splunk HEC support
+- **ML/UEBA:** Isolation Forest anomaly detection
+- **RBAC:** Role-based access control with JWT authentication
+
+## Documentation
+
+- **Installation Guide:** See release notes for detailed instructions
+- **API Documentation:** Available at `/docs` endpoint after installation
+- **Support:** https://github.com/TawfiqulBari/dam-pub/issues
+
+## Version History
+
+- **v1.0.5** (2025-10-27) - Fresh installation fix ✅ **CURRENT**
+- **v1.0.3d** (2025-10-26) - Idempotent migrations
+- **v1.0.3c** (2025-10-26) - Migration fixes
+- **v1.0.3b** (2025-10-26) - Zero-touch installation
+- **v1.0.3a** (2025-10-26) - Initial public release
+
 ## License
 
-Enterprise Database Activity Monitoring System  
+Enterprise Database Activity Monitoring System
 Copyright © 2025 Tawfiqul Bari
