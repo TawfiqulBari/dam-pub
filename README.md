@@ -2,45 +2,37 @@
 
 This repository contains public release artifacts for the DAM (Database Activity Monitoring) System.
 
-## Download Latest Release ✅ **v1.0.8 RECOMMENDED**
+## Download Latest Release ✅ **v1.0.9 RECOMMENDED**
 
 ```bash
-# Download v1.0.8 (RECOMMENDED - includes password mismatch fix)
-wget https://github.com/TawfiqulBari/dam-pub/releases/download/v1.0.8/dam-deployment-v1.0.8.tar.gz
+# Download v1.0.9 (RECOMMENDED - includes migration transaction fixes)
+wget https://github.com/TawfiqulBari/dam-pub/releases/download/v1.0.9/dam-deployment-v1.0.9.tar.gz
 
 # Verify checksum (optional but recommended)
-echo "3948e6bfbbfedc02985b6015e197e03537db4e826825caa8a66cb3ca07c9baf2  dam-deployment-v1.0.8.tar.gz" | sha256sum -c
+echo "833da84dbd46c14b53f42e8e2ab502ad34d412c2f293afc3d3a0eabd69f9a86a  dam-deployment-v1.0.9.tar.gz" | sha256sum -c
 
 # Extract and install
-tar -xzf dam-deployment-v1.0.8.tar.gz
-cd dam-deployment-v1.0.8
+tar -xzf dam-deployment-v1.0.9.tar.gz
+cd dam-deployment-v1.0.9
 sudo ./install.sh
 ```
 
-**Why v1.0.8?**
-- 🔧 **Critical Fix**: PostgreSQL password mismatch on fresh installations
-- ✅ **Automatic cleanup** - Detects and removes stale .env files
-- ✅ **Volume detection** - Prompts to clean existing PostgreSQL volumes
-- ✅ **Clear warnings** - .env.template now has obvious placeholder values
-- ✅ **Production-ready** - Permanent solution for password authentication errors
+**Why v1.0.9?**
+- 🔧 **Critical Fix**: Migration transaction failures resolved
+- ✅ **Zero-touch deployment** - Migrations now idempotent with direct SQL queries
+- ✅ **Enhanced error recovery** - install.sh includes migration health checks and retry logic
+- ✅ **Production-ready** - Eliminates manual intervention on client VMs
 
-**What's New in v1.0.8:**
-- Fixed password authentication failures on client installations
-- Added `cleanup_existing_installation()` function to install.sh
-- Improved .env.template with `__GENERATED_BY_INSTALLER__` placeholders
-- Enhanced README with password troubleshooting section
+**What's New in v1.0.9:**
+- Fixed migration transaction aborts using direct SQL for metadata inspection
+- Added PostgreSQL DO blocks for idempotent ENUM, index, and constraint operations
+- Enhanced install.sh with migration health checks and automatic recovery
+- Validates critical tables after migrations complete
 - Safe for both new deployments and upgrades from all previous versions
 
 ## Upgrade from Previous Versions
 
-**From v1.0.4:**
-```bash
-docker compose pull
-docker compose up -d
-# No migration needed - your database is already partitioned
-```
-
-**From v1.0.3d or earlier:**
+**From v1.0.8 or earlier:**
 ```bash
 # Backup your database first
 docker compose exec postgres pg_dump -U dam_user dam_db > backup_$(date +%Y%m%d).sql
@@ -51,19 +43,19 @@ docker compose pull
 # Restart services
 docker compose up -d
 
-# Run migrations
+# Run migrations (now with automatic error recovery)
 docker compose exec api alembic upgrade head
 ```
 
 ## Docker Images
 
 All Docker images are available on Docker Hub:
-- `tawfiqulbari/dam-api:v1.0.8` (also: `latest`)
-- `tawfiqulbari/dam-frontend:v1.0.8`
-- `tawfiqulbari/dam-collector:v1.0.8`
-- `tawfiqulbari/dam-parser:v1.0.8`
-- `tawfiqulbari/dam-policy:v1.0.8`
-- `tawfiqulbari/dam-alerts:v1.0.8`
+- `tawfiqulbari/dam-api:v1.0.9` (also: `latest`)
+- `tawfiqulbari/dam-frontend:v1.0.9`
+- `tawfiqulbari/dam-collector:v1.0.9`
+- `tawfiqulbari/dam-parser:v1.0.9`
+- `tawfiqulbari/dam-policy:v1.0.9`
+- `tawfiqulbari/dam-alerts:v1.0.9`
 
 **Pull latest images:**
 ```bash
@@ -110,8 +102,13 @@ docker pull tawfiqulbari/dam-alerts:latest
 
 ## Version History
 
-- **v1.0.5** (2025-10-27) - Fresh installation fix ✅ **CURRENT**
-- **v1.0.3d** (2025-10-26) - Idempotent migrations
+- **v1.0.9** (2025-10-27) - Migration transaction fixes ✅ **CURRENT**
+- **v1.0.8** (2025-10-27) - PostgreSQL password mismatch fix
+- **v1.0.7** (2025-10-27) - Table partitioning fix
+- **v1.0.6** (2025-10-27) - CORS and email fixes
+- **v1.0.5** (2025-10-27) - Fresh installation fix
+- **v1.0.4** (2025-10-26) - Idempotent migrations
+- **v1.0.3d** (2025-10-26) - Migration improvements
 - **v1.0.3c** (2025-10-26) - Migration fixes
 - **v1.0.3b** (2025-10-26) - Zero-touch installation
 - **v1.0.3a** (2025-10-26) - Initial public release
