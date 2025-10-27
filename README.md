@@ -9,7 +9,7 @@ This repository contains public release artifacts for the DAM (Database Activity
 wget https://github.com/TawfiqulBari/dam-pub/releases/download/v1.0.10/dam-deployment-v1.0.10.tar.gz
 
 # Verify checksum (optional but recommended)
-echo "763fa9f403f704a7fe00cc940c58f1e09e5296e35a80b0a51215e2168fcda207  dam-deployment-v1.0.10.tar.gz" | sha256sum -c
+echo "666a728958c990a1e623f5f829ece036241882b2ebee45851fec8a6d1da64e26  dam-deployment-v1.0.10.tar.gz" | sha256sum -c
 
 # Extract and install
 tar -xzf dam-deployment-v1.0.10.tar.gz
