@@ -2,33 +2,34 @@
 
 This repository contains public release artifacts for the DAM (Database Activity Monitoring) System.
 
-## Download Latest Release ✅ **v1.0.5 RECOMMENDED**
+## Download Latest Release ✅ **v1.0.8 RECOMMENDED**
 
 ```bash
-# Download v1.0.5 (RECOMMENDED - includes fresh installation fix)
-wget https://github.com/TawfiqulBari/dam-pub/releases/download/v1.0.5/dam-deployment-v1.0.5.tar.gz
+# Download v1.0.8 (RECOMMENDED - includes password mismatch fix)
+wget https://github.com/TawfiqulBari/dam-pub/releases/download/v1.0.8/dam-deployment-v1.0.8.tar.gz
 
 # Verify checksum (optional but recommended)
-echo "6489c8095e9e80a9b40f6ee222bab35f326dfabf202e928707202cb73a34275b  dam-deployment-v1.0.5.tar.gz" | sha256sum -c
+echo "3948e6bfbbfedc02985b6015e197e03537db4e826825caa8a66cb3ca07c9baf2  dam-deployment-v1.0.8.tar.gz" | sha256sum -c
 
 # Extract and install
-tar -xzf dam-deployment-v1.0.5.tar.gz
-cd dam-deployment-v1.0.5
+tar -xzf dam-deployment-v1.0.8.tar.gz
+cd dam-deployment-v1.0.8
 sudo ./install.sh
 ```
 
-**Why v1.0.5?**
-- 🔧 **Critical Fix**: Fresh installation support for table partitioning
-- ✅ **No data migration errors** - Skips data copy for fresh installs
-- ✅ **Works for both scenarios** - Fresh installs and upgrades
-- ✅ **All migrations idempotent** - Safe for repeat installations
-- ✅ **Production-ready** - Tested for all deployment scenarios
+**Why v1.0.8?**
+- 🔧 **Critical Fix**: PostgreSQL password mismatch on fresh installations
+- ✅ **Automatic cleanup** - Detects and removes stale .env files
+- ✅ **Volume detection** - Prompts to clean existing PostgreSQL volumes
+- ✅ **Clear warnings** - .env.template now has obvious placeholder values
+- ✅ **Production-ready** - Permanent solution for password authentication errors
 
-**What's New in v1.0.5:**
-- Fixed "INSERT has more expressions than target columns" error
-- Added `table_exists()` checks before data migration
-- Improved console output for fresh vs upgrade installs
-- Safe for both new deployments and upgrades from v1.0.4
+**What's New in v1.0.8:**
+- Fixed password authentication failures on client installations
+- Added `cleanup_existing_installation()` function to install.sh
+- Improved .env.template with `__GENERATED_BY_INSTALLER__` placeholders
+- Enhanced README with password troubleshooting section
+- Safe for both new deployments and upgrades from all previous versions
 
 ## Upgrade from Previous Versions
 
@@ -57,12 +58,12 @@ docker compose exec api alembic upgrade head
 ## Docker Images
 
 All Docker images are available on Docker Hub:
-- `tawfiqulbari/dam-api:v1.0.5` (also: `latest`)
-- `tawfiqulbari/dam-frontend:v1.0.5`
-- `tawfiqulbari/dam-collector:v1.0.5`
-- `tawfiqulbari/dam-parser:v1.0.5`
-- `tawfiqulbari/dam-policy:v1.0.5`
-- `tawfiqulbari/dam-alerts:v1.0.5`
+- `tawfiqulbari/dam-api:v1.0.8` (also: `latest`)
+- `tawfiqulbari/dam-frontend:v1.0.8`
+- `tawfiqulbari/dam-collector:v1.0.8`
+- `tawfiqulbari/dam-parser:v1.0.8`
+- `tawfiqulbari/dam-policy:v1.0.8`
+- `tawfiqulbari/dam-alerts:v1.0.8`
 
 **Pull latest images:**
 ```bash
