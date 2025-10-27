@@ -2,26 +2,26 @@
 
 This repository contains public release artifacts for the DAM (Database Activity Monitoring) System.
 
-## Download Latest Release ✅ **v1.0.9 RECOMMENDED**
+## Download Latest Release ✅ **v1.0.10 RECOMMENDED**
 
 ```bash
-# Download v1.0.9 (RECOMMENDED - includes migration transaction fixes)
-wget https://github.com/TawfiqulBari/dam-pub/releases/download/v1.0.9/dam-deployment-v1.0.9.tar.gz
+# Download v1.0.10 (RECOMMENDED - includes validation fix)
+wget https://github.com/TawfiqulBari/dam-pub/releases/download/v1.0.10/dam-deployment-v1.0.10.tar.gz
 
 # Verify checksum (optional but recommended)
-echo "833da84dbd46c14b53f42e8e2ab502ad34d412c2f293afc3d3a0eabd69f9a86a  dam-deployment-v1.0.9.tar.gz" | sha256sum -c
+echo "763fa9f403f704a7fe00cc940c58f1e09e5296e35a80b0a51215e2168fcda207  dam-deployment-v1.0.10.tar.gz" | sha256sum -c
 
 # Extract and install
-tar -xzf dam-deployment-v1.0.9.tar.gz
-cd dam-deployment-v1.0.9
+tar -xzf dam-deployment-v1.0.10.tar.gz
+cd dam-deployment-v1.0.10
 sudo ./install.sh
 ```
 
-**Why v1.0.9?**
-- 🔧 **Critical Fix**: Migration transaction failures resolved
-- ✅ **Zero-touch deployment** - Migrations now idempotent with direct SQL queries
-- ✅ **Enhanced error recovery** - install.sh includes migration health checks and retry logic
-- ✅ **Production-ready** - Eliminates manual intervention on client VMs
+**Why v1.0.10?**
+- 🔧 **Critical Fix**: install.sh validation bug resolved
+- ✅ **Zero-touch deployment** - Migrations and RBAC seeding fully automated
+- ✅ **No manual steps** - Everything handled by install.sh automatically
+- ✅ **Production-ready** - True zero-intervention deployment on client VMs
 
 **What's New in v1.0.9:**
 - Fixed migration transaction aborts using direct SQL for metadata inspection
@@ -49,7 +49,7 @@ docker compose exec api alembic upgrade head
 
 ## Docker Images
 
-All Docker images are available on Docker Hub:
+All Docker images are available on Docker Hub (v1.0.10 uses v1.0.9 images):
 - `tawfiqulbari/dam-api:v1.0.9` (also: `latest`)
 - `tawfiqulbari/dam-frontend:v1.0.9`
 - `tawfiqulbari/dam-collector:v1.0.9`
@@ -102,7 +102,8 @@ docker pull tawfiqulbari/dam-alerts:latest
 
 ## Version History
 
-- **v1.0.9** (2025-10-27) - Migration transaction fixes ✅ **CURRENT**
+- **v1.0.10** (2025-10-27) - install.sh validation fix ✅ **CURRENT**
+- **v1.0.9** (2025-10-27) - Migration transaction fixes
 - **v1.0.8** (2025-10-27) - PostgreSQL password mismatch fix
 - **v1.0.7** (2025-10-27) - Table partitioning fix
 - **v1.0.6** (2025-10-27) - CORS and email fixes
